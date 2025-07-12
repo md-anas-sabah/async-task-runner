@@ -1,0 +1,52 @@
+{
+  "name": "async-task-runner",
+  "version": "1.0.0",
+  "description": "A Node.js-based utility to run async tasks with concurrency limits, retries, and timeouts. Great for web scrapers, bots, or bulk operations.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "test": "jest",
+    "lint": "eslint src/**/*.ts",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "async",
+    "task",
+    "runner",
+    "concurrency",
+    "queue",
+    "parallel",
+    "retry",
+    "timeout",
+    "scraper",
+    "bot",
+    "bulk"
+  ],
+  "author": "",
+  "license": "MIT",
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "eslint": "^8.0.0",
+    "jest": "^29.0.0",
+    "typescript": "^5.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/username/async-task-runner.git"
+  },
+  "bugs": {
+    "url": "https://github.com/username/async-task-runner/issues"
+  },
+  "homepage": "https://github.com/username/async-task-runner#readme"
+}
