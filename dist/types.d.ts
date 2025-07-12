@@ -11,6 +11,55 @@ export interface RetryConfig {
 export interface TaskConfig extends RetryConfig, TimeoutConfig {
     concurrency?: number;
 }
+export interface TaskMetadata {
+    id?: string;
+    name?: string;
+    priority?: number;
+    batch?: string;
+    dependencies?: string[];
+    tags?: string[];
+    userData?: any;
+}
+export interface PriorityTask<T = any> extends TaskMetadata {
+    task: AsyncTask<T>;
+    priority: number;
+}
+export interface BatchConfig {
+    batchSize?: number;
+    batchDelay?: number;
+    parallelBatches?: boolean;
+}
+export interface EventHandlers {
+    onStart?: (taskIndex: number, metadata?: TaskMetadata) => void;
+    onRetry?: (taskIndex: number, attempt: number, error: Error, metadata?: TaskMetadata) => void;
+    onSuccess?: (taskIndex: number, result: any, duration: number, metadata?: TaskMetadata) => void;
+    onError?: (taskIndex: number, error: Error, attempts: number, metadata?: TaskMetadata) => void;
+    onTimeout?: (taskIndex: number, duration: number, metadata?: TaskMetadata) => void;
+    onComplete?: (summary: TaskExecutionSummary) => void;
+    onProgress?: (completed: number, total: number, running: number) => void;
+}
+export interface AdvancedTaskOptions extends TaskConfig, BatchConfig {
+    eventHandlers?: EventHandlers;
+    priorityQueue?: boolean;
+    pauseOnError?: boolean;
+    stopOnError?: boolean;
+}
+export interface QueueStatus {
+    running: number;
+    pending: number;
+    completed: number;
+    failed: number;
+    paused: boolean;
+    stopped: boolean;
+}
+export interface TaskQueue {
+    add(task: AsyncTask | PriorityTask, metadata?: TaskMetadata): void;
+    pause(): void;
+    resume(): void;
+    stop(): void;
+    clear(): void;
+    status(): QueueStatus;
+}
 export interface TaskResult<T = any> {
     success: boolean;
     result?: T;
@@ -19,6 +68,7 @@ export interface TaskResult<T = any> {
     attempts: number;
     duration?: number;
     timedOut?: boolean;
+    metadata?: TaskMetadata;
     retryHistory?: Array<{
         attempt: number;
         error: Error;
@@ -30,6 +80,8 @@ export interface TaskResult<T = any> {
 }
 export interface TaskRunnerOptions extends RetryConfig, TimeoutConfig {
     concurrency: number;
+}
+export interface TaskOptions extends AdvancedTaskOptions {
 }
 export declare class TimeoutError extends Error {
     duration: number;
