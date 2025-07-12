@@ -1,19 +1,23 @@
 import { EventEmitter } from 'events';
 import { AsyncTask, TaskResult, TaskMetadata, PriorityTask, AdvancedTaskOptions, QueueStatus, TaskQueue } from './types.js';
 export declare class AdvancedTaskRunner extends EventEmitter implements TaskQueue {
-    private tasks;
+    protected tasks: Array<{
+        task: AsyncTask;
+        metadata: TaskMetadata;
+        priority: number;
+    }>;
     private running;
     private completed;
     private failed;
-    private isPaused;
-    private isStopped;
-    private options;
+    protected isPaused: boolean;
+    protected isStopped: boolean;
+    protected options: AdvancedTaskOptions;
     private baseRunner;
     constructor(options?: AdvancedTaskOptions);
     add(taskOrPriority: AsyncTask | PriorityTask, metadata?: TaskMetadata): void;
     run(): Promise<TaskResult[]>;
-    private runBatched;
-    private runAll;
+    protected runBatched(): Promise<TaskResult[]>;
+    protected runAll(): Promise<TaskResult[]>;
     pause(): void;
     resume(): void;
     stop(): void;
@@ -66,5 +70,6 @@ export declare class PriorityTaskQueue {
 }
 export declare class EventDrivenTaskRunner extends AdvancedTaskRunner {
     constructor(options?: AdvancedTaskOptions);
+    run(): Promise<TaskResult[]>;
 }
 //# sourceMappingURL=advanced-task-runner.d.ts.map

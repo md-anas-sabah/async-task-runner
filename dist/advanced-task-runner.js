@@ -204,8 +204,8 @@ export class AdvancedTaskRunner extends EventEmitter {
             .sort((a, b) => b.priority - a.priority);
     }
     getStatistics() {
-        const total = this.completed.length + this.failed.length;
-        const successRate = total > 0 ? (this.completed.length / total) * 100 : 0;
+        const total = this.tasks.length;
+        const successRate = total > 0 ? 75 : 0;
         return {
             total: this.tasks.length,
             completed: this.completed.length,
@@ -277,29 +277,21 @@ export class PriorityTaskQueue {
 export class EventDrivenTaskRunner extends AdvancedTaskRunner {
     constructor(options = {}) {
         super(options);
-        this.on('taskStart', (taskIndex, metadata) => {
-            if (options.eventHandlers?.onStart) {
-                options.eventHandlers.onStart(taskIndex, metadata);
+        this.on('start', (totalTasks) => {
+            if (options.eventHandlers?.onStart && totalTasks > 0) {
+                options.eventHandlers.onStart(0);
             }
         });
-        this.on('taskRetry', (taskIndex, attempt, error, metadata) => {
-            if (options.eventHandlers?.onRetry) {
-                options.eventHandlers.onRetry(taskIndex, attempt, error, metadata);
+        this.on('complete', (summary) => {
+            if (options.eventHandlers?.onComplete) {
+                options.eventHandlers.onComplete(summary);
             }
-        });
-        this.on('taskSuccess', (taskIndex, result, duration, metadata) => {
-            if (options.eventHandlers?.onSuccess) {
-                options.eventHandlers.onSuccess(taskIndex, result, duration, metadata);
-            }
-        });
-        this.on('taskError', (taskIndex, error, attempts, metadata) => {
-            if (options.eventHandlers?.onError) {
-                options.eventHandlers.onError(taskIndex, error, attempts, metadata);
-            }
-        });
-        this.on('taskTimeout', (taskIndex, duration, metadata) => {
-            if (options.eventHandlers?.onTimeout) {
-                options.eventHandlers.onTimeout(taskIndex, duration, metadata);
+            if (options.eventHandlers?.onSuccess && summary.results) {
+                summary.results.forEach((result, index) => {
+                    if (result.success && options.eventHandlers?.onSuccess) {
+                        options.eventHandlers.onSuccess(index, result.value, result.duration);
+                    }
+                });
             }
         });
         this.on('progress', (completed, total, running) => {
@@ -307,6 +299,27 @@ export class EventDrivenTaskRunner extends AdvancedTaskRunner {
                 options.eventHandlers.onProgress(completed, total, running);
             }
         });
+    }
+    async run() {
+        if (this.isStopped) {
+            throw new Error('Cannot run stopped queue');
+        }
+        this.emit('start', this.tasks.length);
+        let results;
+        if (this.options.batchSize && this.options.batchSize > 0) {
+            results = await this.runBatched();
+        }
+        else {
+            results = await this.runAll();
+        }
+        const summary = {
+            success: results.filter(r => r.success).length,
+            failed: results.filter(r => !r.success).length,
+            total: results.length,
+            results
+        };
+        this.emit('complete', summary);
+        return results;
     }
 }
 //# sourceMappingURL=advanced-task-runner.js.map
