@@ -2,25 +2,6 @@
   "name": "async-task-runner",
   "version": "1.0.0",
   "description": "A Node.js-based utility to run async tasks with concurrency limits, retries, and timeouts. Great for web scrapers, bots, or bulk operations.",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "bin": {
-    "async-task-runner": "dist/cli.js",
-    "atr": "dist/cli.js"
-  },
-  "scripts": {
-    "build": "tsc",
-    "dev": "tsc --watch",
-    "test": "jest --coverage",
-    "test:watch": "jest --watch",
-    "test:unit": "jest src/",
-    "test:integration": "jest tests/",
-    "test-all": "npm run test",
-    "lint": "eslint src/**/*.ts",
-    "lint:fix": "eslint src/**/*.ts --fix",
-    "typecheck": "tsc --noEmit",
-    "prepublishOnly": "npm run build && npm run test-all"
-  },
   "keywords": [
     "async",
     "task",
@@ -38,15 +19,43 @@
     "events",
     "priority"
   ],
-  "author": "",
+  "homepage": "https://github.com/md-anas-sabah/async-task-runner#readme",
+  "bugs": {
+    "url": "https://github.com/md-anas-sabah/async-task-runner/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/md-anas-sabah/async-task-runner.git"
+  },
   "license": "MIT",
+  "author": "Md Anas Sabah",
   "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "async-task-runner": "dist/cli.js",
+    "atr": "dist/cli.js"
+  },
+  "directories": {
+    "example": "examples",
+    "test": "tests"
+  },
   "files": [
     "dist",
     "examples"
   ],
-  "engines": {
-    "node": ">=16.0.0"
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "test": "jest --coverage",
+    "test:watch": "jest --watch",
+    "test:unit": "jest src/",
+    "test:integration": "jest tests/",
+    "test-all": "npm run test",
+    "lint": "eslint src/**/*.ts",
+    "lint:fix": "eslint src/**/*.ts --fix",
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "npm run build && npm run test-all"
   },
   "dependencies": {
     "commander": "^11.0.0"
@@ -61,18 +70,31 @@
     "ts-jest": "^29.0.0",
     "typescript": "^5.0.0"
   },
+  "engines": {
+    "node": ">=16.0.0"
+  },
   "jest": {
     "preset": "ts-jest",
     "testEnvironment": "node",
-    "roots": ["<rootDir>/src", "<rootDir>/tests"],
-    "testMatch": ["**/__tests__/**/*.ts", "**/?(*.)+(spec|test).ts"],
+    "roots": [
+      "<rootDir>/src",
+      "<rootDir>/tests"
+    ],
+    "testMatch": [
+      "**/__tests__/**/*.ts",
+      "**/?(*.)+(spec|test).ts"
+    ],
     "collectCoverageFrom": [
       "src/**/*.ts",
       "!src/**/*.d.ts",
       "!src/cli.ts"
     ],
     "coverageDirectory": "coverage",
-    "coverageReporters": ["text", "lcov", "html"],
+    "coverageReporters": [
+      "text",
+      "lcov",
+      "html"
+    ],
     "coverageThreshold": {
       "global": {
         "branches": 80,
@@ -81,13 +103,5 @@
         "statements": 80
       }
     }
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/username/async-task-runner.git"
-  },
-  "bugs": {
-    "url": "https://github.com/username/async-task-runner/issues"
-  },
-  "homepage": "https://github.com/username/async-task-runner#readme"
+  }
 }
