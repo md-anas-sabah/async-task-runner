@@ -1,4 +1,4 @@
-import { AsyncTask, TaskResult, TaskRunnerOptions, Logger } from './types.js';
+import { AsyncTask, TaskResult, TaskRunnerOptions, Logger, TaskExecutionSummary } from './types.js';
 export declare class TaskRunner {
     private readonly options;
     private readonly logger;
@@ -6,5 +6,6 @@ export declare class TaskRunner {
     private calculateRetryDelay;
     private delay;
     run<T>(tasks: AsyncTask<T>[]): Promise<TaskResult<T>[]>;
+    runWithSummary<T>(tasks: AsyncTask<T>[]): Promise<TaskExecutionSummary<T>>;
 }
 //# sourceMappingURL=task-runner.d.ts.map

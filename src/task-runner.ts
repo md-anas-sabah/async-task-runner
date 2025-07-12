@@ -1,6 +1,7 @@
-import { AsyncTask, TaskResult, TaskRunnerOptions, Logger, TimeoutError } from './types.js';
+import { AsyncTask, TaskResult, TaskRunnerOptions, Logger, TimeoutError, TaskExecutionSummary } from './types.js';
 import { DefaultLogger } from './logger.js';
 import { withTimeout } from './timeout.js';
+import { generateExecutionSummary } from './summary.js';
 
 export class TaskRunner {
   private readonly options: TaskRunnerOptions;
@@ -35,6 +36,8 @@ export class TaskRunner {
     if (tasks.length === 0) {
       return [];
     }
+
+    const startTime = new Date();
 
     const results: TaskResult<T>[] = new Array(tasks.length);
     const executing: Set<Promise<void>> = new Set();
@@ -179,5 +182,18 @@ export class TaskRunner {
     this.logger.info(`Task execution completed: ${successCount} successful, ${failureCount} failed, ${totalRetries} total retries`);
 
     return results;
+  }
+
+  async runWithSummary<T>(tasks: AsyncTask<T>[]): Promise<TaskExecutionSummary<T>> {
+    if (tasks.length === 0) {
+      const now = new Date();
+      return generateExecutionSummary([], now, now);
+    }
+
+    const startTime = new Date();
+    const results = await this.run(tasks);
+    const endTime = new Date();
+
+    return generateExecutionSummary(results, startTime, endTime);
   }
 }

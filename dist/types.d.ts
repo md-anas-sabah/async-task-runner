@@ -40,4 +40,25 @@ export interface Logger {
     warn(message: string, ...args: any[]): void;
     error(message: string, ...args: any[]): void;
 }
+export interface ErrorSummary {
+    type: 'error' | 'timeout';
+    message: string;
+    count: number;
+    taskIndexes: number[];
+    firstOccurrence: Date;
+    lastOccurrence: Date;
+}
+export interface TaskExecutionSummary<T = any> {
+    success: number;
+    failed: number;
+    timedOut: number;
+    retries: number;
+    totalDuration: number;
+    averageDuration: number;
+    results: TaskResult<T>[];
+    errors: ErrorSummary[];
+    startTime: Date;
+    endTime: Date;
+    executionTime: number;
+}
 //# sourceMappingURL=types.d.ts.map

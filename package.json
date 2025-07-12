@@ -11,6 +11,7 @@
     "test-package": "npm run build && node testing.js",
     "test-retry": "npm run build && node test-retry.js",
     "test-timeout": "npm run build && node test-timeout.js",
+    "test-summary": "npm run build && node test-summary.js",
     "lint": "eslint src/**/*.ts",
     "prepublishOnly": "npm run build"
   },
