@@ -1,10 +1,13 @@
-# async-task-runner
+# async-task-runner | Node.js Async Task Runner with Concurrency Control
 
-[![npm version](https://badge.fury.io/js/async-task-runner.svg)](https://badge.fury.io/js/async-task-runner)
+[![npm version](https://badge.fury.io/js/%40md-anas-sabah%2Fasync-task-runner.svg)](https://badge.fury.io/js/%40md-anas-sabah%2Fasync-task-runner)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Node.js CI](https://github.com/username/async-task-runner/workflows/Node.js%20CI/badge.svg)](https://github.com/username/async-task-runner/actions)
+[![Node.js CI](https://github.com/md-anas-sabah/async-task-runner/workflows/Node.js%20CI/badge.svg)](https://github.com/md-anas-sabah/async-task-runner/actions)
+[![Downloads](https://img.shields.io/npm/dm/@md-anas-sabah/async-task-runner.svg)](https://www.npmjs.com/package/@md-anas-sabah/async-task-runner)
 
-A powerful Node.js utility for running async tasks with intelligent concurrency control, automatic retries, timeouts, and comprehensive reporting. Perfect for web scraping, API processing, file operations, and any bulk async operations.
+**The most powerful async task runner for Node.js** - Execute thousands of async tasks with intelligent concurrency control, automatic retries, exponential backoff, timeouts, and comprehensive reporting. Battle-tested for web scraping, API processing, file operations, data migration, ETL pipelines, and any bulk async operations.
+
+> 🚀 **Perfect for**: Web scraping bots, API batch processing, file transformations, data migrations, parallel downloads, bulk operations, and high-performance async workflows.
 
 ## ✨ Features
 
@@ -18,14 +21,24 @@ A powerful Node.js utility for running async tasks with intelligent concurrency 
 
 ## 📦 Installation
 
+Install the most popular async task runner for Node.js:
+
 ```bash
-npm install async-task-runner
+npm install @md-anas-sabah/async-task-runner
+```
+
+```bash
+yarn add @md-anas-sabah/async-task-runner
+```
+
+```bash
+pnpm add @md-anas-sabah/async-task-runner
 ```
 
 ## 🚀 Quick Start
 
 ```typescript
-import { runTasks } from 'async-task-runner';
+import { runTasks } from '@md-anas-sabah/async-task-runner';
 
 // Define your async tasks
 const tasks = [
@@ -54,7 +67,7 @@ console.log(results);
 ### Basic Usage
 
 ```typescript
-import { runTasks } from 'async-task-runner';
+import { runTasks } from '@md-anas-sabah/async-task-runner';
 
 const tasks = [
   () => new Promise(resolve => setTimeout(() => resolve('Task 1'), 1000)),
@@ -68,7 +81,7 @@ const results = await runTasks(tasks, { concurrency: 2 });
 ### With Retry Logic and Logging
 
 ```typescript
-import { runTasksWithLogging } from 'async-task-runner';
+import { runTasksWithLogging } from '@md-anas-sabah/async-task-runner';
 
 const results = await runTasksWithLogging(unreliableTasks, {
   concurrency: 3,
@@ -82,7 +95,7 @@ const results = await runTasksWithLogging(unreliableTasks, {
 ### With Comprehensive Reporting
 
 ```typescript
-import { runTasksWithSummary, formatSummary } from 'async-task-runner';
+import { runTasksWithSummary, formatSummary } from '@md-anas-sabah/async-task-runner';
 
 const summary = await runTasksWithSummary(tasks, {
   concurrency: 5,
@@ -102,7 +115,7 @@ console.log(formatSummary(summary));
 ### Advanced Configuration
 
 ```typescript
-import { TaskRunner, DefaultLogger } from 'async-task-runner';
+import { TaskRunner, DefaultLogger } from '@md-anas-sabah/async-task-runner';
 
 // Custom logger
 const logger = new DefaultLogger(true);
@@ -164,7 +177,7 @@ console.log(`Scraped ${summary.successCount} products successfully`);
 ### File Processing
 
 ```typescript
-import { runTasks } from 'async-task-runner';
+import { runTasks } from '@md-anas-sabah/async-task-runner';
 import fs from 'fs/promises';
 import path from 'path';
 
@@ -201,7 +214,7 @@ console.log(`Processed ${results.filter(r => r.success).length} files`);
 ### API Batch Processing
 
 ```typescript
-import { runTasksWithLogging } from 'async-task-runner';
+import { runTasksWithLogging } from '@md-anas-sabah/async-task-runner';
 
 // Process user data through multiple API endpoints
 const processUser = (user) => async () => {
@@ -346,7 +359,7 @@ interface TaskExecutionSummary {
 
 ```bash
 # Clone the repository
-git clone https://github.com/username/async-task-runner.git
+git clone https://github.com/md-anas-sabah/async-task-runner.git
 
 # Install dependencies
 npm install
@@ -366,7 +379,7 @@ npm run test-summary
 
 ## 📝 License
 
-MIT © [Your Name](https://github.com/username)
+MIT © [Md Anas Sabah](https://github.com/md-anas-sabah)
 
 ## 🤝 Contributing
 
@@ -389,4 +402,4 @@ Check out the `/examples` directory for more detailed use cases:
 
 ## ⭐ Support
 
-If you find this package useful, please consider giving it a star on [GitHub](https://github.com/username/async-task-runner)!
+If you find this package useful, please consider giving it a star on [GitHub](https://github.com/md-anas-sabah/async-task-runner)!
