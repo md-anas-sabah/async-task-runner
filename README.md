@@ -138,7 +138,7 @@ const results = await runner.run(tasks);
 ### Web Scraping
 
 ```typescript
-import { runTasksWithSummary } from 'async-task-runner';
+import { runTasksWithSummary } from '@md-anas-sabah/async-task-runner';
 import axios from 'axios';
 import * as cheerio from 'cheerio';
 
