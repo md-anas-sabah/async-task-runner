@@ -1,6 +1,6 @@
 {
   "name": "@md-anas-sabah/async-task-runner",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Powerful async task runner for Node.js with concurrency control, smart retries, timeouts & comprehensive reporting. Perfect for web scraping, API processing, file operations & bulk async operations.",
   "keywords": [
     "npm",
