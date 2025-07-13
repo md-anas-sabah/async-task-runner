@@ -320,6 +320,7 @@ describe('CLI Functionality', () => {
 // Helper function to run CLI commands
 function runCLI(args: string[], timeout = 10000): Promise<{ code: number; stdout: string; stderr: string }> {
   return new Promise((resolve, reject) => {
+    const cliPath = path.join(process.cwd(), 'dist', 'cli.js');
     const child = spawn('node', [cliPath, ...args], {
       stdio: 'pipe',
       timeout

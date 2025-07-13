@@ -293,8 +293,8 @@ describe('Advanced Task Runner Features', () => {
       );
       
       expect(results).toHaveLength(2);
-      expect(results[0].metadata?.id).toBe('task-0');
-      expect(results[0].metadata?.name).toBe('Task 1');
+      expect(results[0]?.metadata?.id).toBe('task-0');
+      expect(results[0]?.metadata?.name).toBe('Task 1');
     });
     
     test('should group tasks by batch metadata', () => {
@@ -326,8 +326,8 @@ describe('Advanced Task Runner Features', () => {
       
       const tasks = batch.getTasks();
       expect(tasks).toHaveLength(2);
-      expect(tasks[0].metadata.batch).toBe('test-batch');
-      expect(tasks[1].metadata.batch).toBe('test-batch');
+      expect(tasks[0]?.metadata?.batch).toBe('test-batch');
+      expect(tasks[1]?.metadata?.batch).toBe('test-batch');
       
       batch.clear();
       expect(batch.size()).toBe(0);

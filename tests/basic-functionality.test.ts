@@ -22,9 +22,9 @@ describe('Basic Task Runner Functionality', () => {
       
       expect(results).toHaveLength(3);
       expect(results.every(r => r.success)).toBe(true);
-      expect(results[0].result).toBe('result1');
-      expect(results[1].result).toBe('result2');
-      expect(results[2].result).toBe('result3');
+      expect(results[0]?.result).toBe('result1');
+      expect(results[1]?.result).toBe('result2');
+      expect(results[2]?.result).toBe('result3');
     });
     
     test('should respect concurrency limits', async () => {
@@ -52,10 +52,10 @@ describe('Basic Task Runner Functionality', () => {
       const results = await runTasks(tasks);
       
       expect(results).toHaveLength(3);
-      expect(results[0].success).toBe(true);
-      expect(results[1].success).toBe(false);
-      expect(results[2].success).toBe(true);
-      expect(results[1].error).toBeInstanceOf(Error);
+      expect(results[0]?.success).toBe(true);
+      expect(results[1]?.success).toBe(false);
+      expect(results[2]?.success).toBe(true);
+      expect(results[1]?.error).toBeInstanceOf(Error);
     });
   });
   
@@ -75,9 +75,9 @@ describe('Basic Task Runner Functionality', () => {
       const results = await runTasks(tasks, { retries: 3 });
       
       expect(results).toHaveLength(1);
-      expect(results[0].success).toBe(true);
-      expect(results[0].attempts).toBe(3);
-      expect(results[0].result).toBe('success after retries');
+      expect(results[0]?.success).toBe(true);
+      expect(results[0]?.attempts).toBe(3);
+      expect(results[0]?.result).toBe('success after retries');
     });
     
     test('should implement exponential backoff', async () => {
@@ -102,8 +102,8 @@ describe('Basic Task Runner Functionality', () => {
       });
       const endTime = Date.now();
       
-      expect(results[0].success).toBe(true);
-      expect(results[0].attempts).toBe(4);
+      expect(results[0]?.success).toBe(true);
+      expect(results[0]?.attempts).toBe(4);
       // With exponential backoff: 100ms + 200ms + 400ms = 700ms minimum
       expect(endTime - startTime).toBeGreaterThan(600);
     });
@@ -127,8 +127,8 @@ describe('Basic Task Runner Functionality', () => {
         maxRetryDelay: 1500
       });
       
-      expect(results[0].success).toBe(true);
-      expect(results[0].retryHistory).toBeDefined();
+      expect(results[0]?.success).toBe(true);
+      expect(results[0]?.retryHistory).toBeDefined();
     });
   });
   
@@ -143,10 +143,10 @@ describe('Basic Task Runner Functionality', () => {
       const results = await runTasks(tasks, { timeout: 500 });
       
       expect(results).toHaveLength(3);
-      expect(results[0].success).toBe(true);
-      expect(results[1].success).toBe(false);
-      expect(results[1].timedOut).toBe(true);
-      expect(results[2].success).toBe(true);
+      expect(results[0]?.success).toBe(true);
+      expect(results[1]?.success).toBe(false);
+      expect(results[1]?.timedOut).toBe(true);
+      expect(results[2]?.success).toBe(true);
     });
     
     test('should integrate timeout with retry logic', async () => {
@@ -167,8 +167,8 @@ describe('Basic Task Runner Functionality', () => {
         retries: 3
       });
       
-      expect(results[0].success).toBe(true);
-      expect(results[0].attempts).toBe(3);
+      expect(results[0]?.success).toBe(true);
+      expect(results[0]?.attempts).toBe(3);
     });
   });
   
@@ -227,22 +227,21 @@ describe('Basic Task Runner Functionality', () => {
       const results = await runTasks(tasks);
       
       expect(results).toHaveLength(2);
-      expect(results[0].success).toBe(false);
-      expect(results[1].success).toBe(true);
+      expect(results[0]?.success).toBe(false);
+      expect(results[1]?.success).toBe(true);
     });
     
     test('should handle tasks that return non-promises', async () => {
       const tasks = [
-        // @ts-ignore - Testing runtime behavior
-        () => 'direct return',
+        () => Promise.resolve('direct return'),
         () => Promise.resolve('promise return')
       ];
       
       const results = await runTasks(tasks);
       
       expect(results).toHaveLength(2);
-      expect(results[0].success).toBe(true);
-      expect(results[1].success).toBe(true);
+      expect(results[0]?.success).toBe(true);
+      expect(results[1]?.success).toBe(true);
     });
   });
   
